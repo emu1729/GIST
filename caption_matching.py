@@ -78,26 +78,15 @@ def run_matching(model_name, long_captions, metadata, image_folder, class_file, 
                 image_features = model.encode_image(image)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
 
-                text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-                text_probs = torch.flatten(text_probs).cpu().detach().numpy()
-
                 specific_text_features = specific_text_features_dict[lines[label]]
 
                 specific_text_probs = (100.0 * image_features @ specific_text_features.T).softmax(dim=-1)
                 specific_text_probs = torch.flatten(specific_text_probs).cpu().detach().numpy()
 
-            sorted_indices = np.argsort(-text_probs)
             specific_sorted_indices = np.argsort(-specific_text_probs)
 
-            top_indices = sorted_indices[:5]
-            top_values = text_probs[top_indices]
             top_specific_indices = specific_sorted_indices[:5]
-            top_specific_values = specific_text_probs[top_specific_indices]
             print("Label: ", row['label'])
-
-            if label == top_indices[0]:
-                accurate += 1
-                print(accurate)
 
             print([captions_dict[lines[label]][ind] for ind in top_specific_indices])
             filename_caption_dict[row['filename']] = [captions_dict[lines[label]][ind] for ind in top_specific_indices]
