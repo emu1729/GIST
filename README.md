@@ -17,10 +17,10 @@ All datasets are located in the `datasets/` directory. Please download images fo
 * **flower**: [https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz)
 * **fitzpatrick**: [https://github.com/mattgroh/fitzpatrick17k](https://github.com/mattgroh/fitzpatrick17k)
 
-We provide example 5, 3, and 1 shot metadata files for each dataset as well.
+We provide example 5, 3, and 1 shot metadata files for each dataset as well. The Fitzpatrick40 metadata file (`datasets/fitzpatrick40/metadata.csv`) can be used to create our cleaned Fitzpatrick40 dataset from the original Fitzpatrick17k dataset.
 
 ## Caption Matching
-We provide json files of our top-5 matched captions for training images of the aircraft, CUB, flower, and fitzpatrick datasets. However, we additionally provide an example script for how to match captions `run_caption_matching_example.sh` in case you want to try matching captions for a novel dataset.
+We provide json files of our top-5 matched captions for training images of the aircraft, CUB, flower, and fitzpatrick datasets. We additionally provide an example script for how to match captions `run_caption_matching_example.sh` in case you want to try matching captions for a novel dataset.
 
 ## Fine-Grained Classification
 We provide scripts to run fine-grained all, 5, 3, and 1 shot classification on each of the aircraft, CUB, flower, and fitzpatrick datasets. As an example, if a user wants to run 5 shot fine-grained classification on the aircraft dataset, they would first run contrastive fine-tuning
