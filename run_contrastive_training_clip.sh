@@ -1,1 +1,2 @@
+
 CUDA_VISIBLE_DEVICES=0 python contrastive_training_clip.py --metadata datasets/aircraft/metadata.csv --captions_file datasets/aircraft/captions_top5.json --num_captions 4 --image_folder datasets/aircraft/images/ --output_file aircraft

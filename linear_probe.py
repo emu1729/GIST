@@ -1,12 +1,12 @@
 import json
 import pickle
-import pandas as pd
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, TensorDataset
-from networks import one_layer_net, ConcatenatedNetwork
 import copy
+import argparse
 
 
 parser = argparse.ArgumentParser(description='PyTorch')
@@ -41,6 +41,8 @@ def run_linear_probe(image_embedding_file, metadata, num_epochs, lr, output_file
             val_keys.append(row['filename'].split('/')[-1].split('.')[0])
         if row['split'] == 'test':
             test_keys.append(row['filename'].split('/')[-1].split('.')[0])
+
+    import numpy as np
     
     #image_embeddings = {key: value.flatten() for key, value in image_embeddings.items()}
     image_embeddings = {key.split('/')[-1].split('.')[0]: np.array(value) for key, value in image_embeddings.items()}
@@ -96,19 +98,11 @@ def run_linear_probe(image_embedding_file, metadata, num_epochs, lr, output_file
     
     # Define the single-layer network
     input_size = len(X_train[0])
-    if 'fitzpatrick' in dataset_name:
-        output_size = 40
-    elif 'cub' in dataset_name:
-        output_size = 200
-    elif 'flower' in dataset_name:
-        output_size = 102
-    elif 'aircraft' in dataset_name:
-        output_size = 100
+    output_size = len(df['label'].unique())
     
     print(input_size)
     print(output_size)
-    if network == 'linear':
-        net = torch.nn.Linear(input_size, output_size)
+    net = torch.nn.Linear(input_size, output_size)
     
     # Define the loss function and optimizer
     criterion = torch.nn.CrossEntropyLoss()

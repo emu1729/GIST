@@ -26,10 +26,20 @@ We provide json files of our top-5 matched captions for training images of the a
 We provide scripts to run fine-grained all, 5, 3, and 1 shot classification on each of the aircraft, CUB, flower, and fitzpatrick datasets. As an example, if a user wants to run 5 shot fine-grained classification on the aircraft dataset, they would first run contrastive fine-tuning
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python contrastive_training_clip.py --metadata datasets/aircraft/metadata.csv --captions_file datasets/aircraft/captions_top5.json --num_captions 4 --image_folder datasets/aircraft/images/ --output_file aircraft
+CUDA_VISIBLE_DEVICES=0 python contrastive_training_clip.py --metadata datasets/aircraft/metadata_5shot.csv --captions_file datasets/aircraft/captions_top5.json --num_captions 4 --image_folder datasets/aircraft/images/ --output_file aircraft_5shot
 ```
 
+Once the contrastive fine-tuning is run, you can create clip embeddings for images using a fine-tuned network as follows
 
+```bash
+CUDA_VISIBLE_DEVICES=0 python create_clip_embeddings.py --metadata datasets/aircraft/metadata_5shot.csv --clip_weights aircraft_5shot_epoch_39.pt --image_folder datasets/aircraft/images/ --output_file datasets/aircraft/aircraft_5shot_embeddings.pkl
+```
+
+Finally, we can learn a linear image probe for the fine-tuned CLIP network as follows
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python linear_probe.py --image_embedding_file datasets/aircraft/aircraft_5shot_embeddings.pkl --metadata datasets/aircraft/metadata_5shot.csv
+```
 
 
 
