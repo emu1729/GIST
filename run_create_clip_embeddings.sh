@@ -1,0 +1,2 @@
+
+CUDA_VISIBLE_DEVICES=0 python create_clip_embeddings.py --metadata datasets/aircraft/metadata_5shot.csv --clip_weights aircraft_5shot_epoch_39.pt --image_folder datasets/aircraft/images/ --output_file datasets/aircraft/aircraft_5shot_embeddings.pkl

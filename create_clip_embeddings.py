@@ -4,6 +4,7 @@ from PIL import Image
 from tqdm import tqdm
 import pickle
 import torch
+import argparse
 
 parser = argparse.ArgumentParser(description='PyTorch')
 parser.add_argument('--metadata', type=str, default=None, metavar='N',
