@@ -15,12 +15,20 @@ All datasets are located in the `datasets/` directory. Please download images fo
 * **aircraft**: [https://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/archives/fgvc-aircraft-2013b.tar.gz](https://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/archives/fgvc-aircraft-2013b.tar.gz)
 * **CUB**: [https://data.caltech.edu/records/20098](https://data.caltech.edu/records/20098)
 * **flower**: [https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz)
-* **fitzpatrick**: 
+* **fitzpatrick**: [https://github.com/mattgroh/fitzpatrick17k](https://github.com/mattgroh/fitzpatrick17k)
+
+We provide example 5, 3, and 1 shot metadata files for each dataset as well.
 
 ## Caption Matching
 We provide json files of our top-5 matched captions for training images of the aircraft, CUB, flower, and fitzpatrick datasets. However, we additionally provide an example script for how to match captions `run_caption_matching_example.sh` in case you want to try matching captions for a novel dataset.
 
 ## Fine-Grained Classification
+We provide scripts to run fine-grained all, 5, 3, and 1 shot classification on each of the aircraft, CUB, flower, and fitzpatrick datasets. As an example, if a user wants to run 5 shot fine-grained classification on the aircraft dataset, they would first run contrastive fine-tuning
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python contrastive_training_clip.py --metadata datasets/aircraft/metadata.csv --captions_file datasets/aircraft/captions_top5.json --num_captions 4 --image_folder datasets/aircraft/images/ --output_file aircraft
+```
+
 
 
 

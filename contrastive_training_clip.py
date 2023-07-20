@@ -7,7 +7,6 @@ import clip
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, TensorDataset
-from networks import one_layer_net, ConcatenatedNetwork
 import copy
 from torchvision.transforms import Compose, Resize, CenterCrop, RandomHorizontalFlip, ToTensor, RandomResizedCrop
 from PIL import Image
@@ -29,20 +28,6 @@ parser.add_argument('--output_file', type=str, default=None, metavar='N',
                     help='where to save matched output')
 
 
-class image_text_dataset(Dataset):
-    def __init__(self, list_image_path, list_txt):
-        self.image_path = list_image_path
-        self.title = clip.tokenize(list_txt)
-
-    def __len__(self):
-        return len(self.title)
-
-    def __getitem__(self, idx):
-        image = train_transforms(Image.open(self.image_path[idx]))  # Image from PIL module
-        title = self.title[idx]
-        return image, title
-
-
 def run_fine_tuning(captions_file, metadata, image_folder, num_captions, clip_model, output_file):
 
     model, preprocess = clip.load(clip_model, device='cuda', jit=False)  # Must set jit=False for training
@@ -55,6 +40,19 @@ def run_fine_tuning(captions_file, metadata, image_folder, num_captions, clip_mo
         RandomHorizontalFlip(),
         preprocess,  # apply the CLIP preprocessing to the images
     ])
+
+    class image_text_dataset(Dataset):
+        def __init__(self, list_image_path, list_txt):
+            self.image_path = list_image_path
+            self.title = clip.tokenize(list_txt)
+
+        def __len__(self):
+            return len(self.title)
+
+        def __getitem__(self, idx):
+            image = train_transforms(Image.open(self.image_path[idx]))  # Image from PIL module
+            title = self.title[idx]
+            return image, title
 
     captions_dict = json.load(open(captions_file, 'rb'))
     df = pd.read_csv(metadata)
@@ -106,7 +104,7 @@ def run_fine_tuning(captions_file, metadata, image_folder, num_captions, clip_mo
             clip.model.convert_weights(model)
 
         if (epoch+1) % 10 == 0:
-            torch.save(model.state_dict(), output_file)
+            torch.save(model.state_dict(), output_file + '_epoch_' + str(epoch) + '.pt')
 
 
 if __name__ == '__main__':
