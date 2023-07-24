@@ -1,5 +1,5 @@
 # GIST: Generating Image Specific Text
-Code for ArXiv paper "Generating Image Specific Text For Fine-Grained Classification"
+Code for ArXiv paper ["Generating Image Specific Text For Fine-Grained Classification"](https://arxiv.org/abs/2307.11315)
 
 ## Setting up Environment
 You can set up a conda environment with required packages for GIST as follows:
