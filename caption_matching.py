@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import numpy as np
 import tqdm
-
+import argparse
 
 parser = argparse.ArgumentParser(description='PyTorch')
 parser.add_argument('--model_name', type=str, default='ViT-B-32', metavar='N',
