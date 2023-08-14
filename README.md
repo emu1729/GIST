@@ -41,5 +41,14 @@ Finally, we can learn a linear image probe for the fine-tuned CLIP network as fo
 CUDA_VISIBLE_DEVICES=0 python linear_probe.py --image_embedding_file datasets/aircraft/aircraft_5shot_embeddings.pkl --metadata datasets/aircraft/metadata_5shot.csv
 ```
 
-
+## Citation
+If you find this repository helpful, please cite our paper:
+```
+@article{LewisMu2023,
+  title={GIST: Generating Image-Specific Text for Fine-grained Object Classification},
+  author={Kathleen M Lewis* and Emily Mu* and Adrian V Dalca and John Guttag},
+  journal={arXiv preprint arXiv:2307.11315},
+  year={2023}
+}
+```
 
